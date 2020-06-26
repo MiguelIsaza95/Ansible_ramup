@@ -1,7 +1,7 @@
 ---
 # backend playbook
 - name: "Provisioning backend server"
-  hosts: tag_Name_movie_back:&tag_Environment_Test
+  hosts: localhost
   become: yes
   become_user: root
   become_method: sudo
