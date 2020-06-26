@@ -1,10 +1,6 @@
 ---
 #tasks file
- 
-- name: "updating server"
-  apt:
-    update_cache: yes
- 
+
 - name: "Installing apt dependencies"
   apt:
           name: "{{ item }}"
