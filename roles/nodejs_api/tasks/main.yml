@@ -26,9 +26,9 @@
           state: present
   notify: install git_latest
 
-- name: clone ui repo
+- name: clone api repo
   git:
-          repo: https://github.com/MiguelIsaza95/movie-analyst-ui.git
+          repo: https://github.com/MiguelIsaza95/movie-analyst-api.git
           dest: "{{ home_path }}/movie-analyst-api"
           update: yes
           accept_hostkey: no
