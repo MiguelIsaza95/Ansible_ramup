@@ -1,5 +1,4 @@
 ---
-# proxy playbook
 - name: "Provisioning nginx proxy"
   hosts: localhost
   become: yes

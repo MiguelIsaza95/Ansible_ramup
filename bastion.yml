@@ -1,5 +1,4 @@
 ---
-# backend playbook
 - name: "Provisioning mysql server"
   hosts: localhost
   become: yes

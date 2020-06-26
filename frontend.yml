@@ -1,5 +1,4 @@
 ---
-# frontend playbook
 - name: "Provisioning fronted server"
   hosts: localhost
   become: yes
