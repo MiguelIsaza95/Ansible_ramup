@@ -2,7 +2,7 @@
 - name: "Provisioning nginx proxy"
   hosts: localhost
   become: yes
-  become_ user: root
+  become_user: root
   become_method: sudo
   roles:
           - nginx

@@ -2,6 +2,7 @@
 - name: "Provisioning fronted server"
   hosts: localhost
   become: yes
+  become_user: root
   become_method: sudo
   roles:
           - nodejs_ui
