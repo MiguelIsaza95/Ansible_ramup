@@ -1,9 +1,9 @@
 ---
 # backend playbook
-- name: "Provisioning backend server"
+- name: "Provisioning mysql server"
   hosts: localhost
   become: yes
   become_user: root
   become_method: sudo
   roles:
-          - nodejs_api
+          - mysql_client
