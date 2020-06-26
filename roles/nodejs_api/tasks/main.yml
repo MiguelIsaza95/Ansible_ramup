@@ -7,7 +7,7 @@
           state: present
 
 - name:  see Linux Standard Base to add node repo
-  command: lsb_release -c
+  command: lsb_release -cs
   register: lsb_release
 
 - name: see register result
@@ -16,7 +16,7 @@
 
 - name: add node source repo
   apt_repository:
-          repo: "deb https://deb.nodesource.com/{{ node_version }}  {{ lsb_release.stdout }}"
+          repo: "deb https://deb.nodesource.com/{{ node_version }}  {{ lsb_release.stdout }} main"
           state: present
           update_cache: yes
 
@@ -26,21 +26,21 @@
           state: present
   notify: install git_latest
 
-- name: clone api repo
+- name: clone ui repo
   git:
-          repo: https://github.com/MiguelIsaza95/movie-analyst-api.git
+          repo: https://github.com/MiguelIsaza95/movie-analyst-ui.git
           dest: "{{ home_path }}/movie-analyst-api"
           update: yes
           accept_hostkey: no
 
 - name: Install packages based on package.json
   npm:
-          path: "{{ home_path }}/movie-analyst-api"
+          path: "{{ home_path }}/movie-analyst-api/"
           state: latest
 
 - name: Start app
   shell: |
-          cd /home/ubuntu/movie-analyst-api
+          cd /home/ubuntu/movie-analyst-api 
           npm start &
   args:
           warn: no
