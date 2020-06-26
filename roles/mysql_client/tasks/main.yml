@@ -1,0 +1,41 @@
+---
+#tasks file
+ 
+- name: "updating server"
+  apt:
+    update_cache: yes
+ 
+- name: "Installing apt dependencies"
+  apt:
+          name: "{{ item }}"
+  with_items:
+          - python-pip
+          - python-dev 
+          - libmysqlclient-dev
+          - mysql-client
+
+- name: "Installing pip dependencies"
+  pip:
+          name: MySQL-python
+          extra_args: --index=https://pypi.python.org/pypi/
+
+- name: set default auth method to mysql_native_password
+  lineinfile:
+          dest: "{{ my_conf_path }}"
+          insertafter: '[mysqld]'
+          line: 'default-auth=mysql_native_password'
+
+- name: Copy init.sql script
+  template:
+          src: init.sql
+          dest: "{{ home_path }}"
+          mode: 0775
+
+- name: execute sql script
+  mysql_db:
+          login_host: "{{ db_host }}"
+          login_user: "{{ db_user }}"
+          login_password: "{{ db_pass }}"
+          state: import
+          name: all
+          target: "{{ home_path }}/init.sql"

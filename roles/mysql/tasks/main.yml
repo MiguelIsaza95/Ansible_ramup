@@ -1,0 +1,58 @@
+---
+#tasks file
+ 
+- name: "updating server"
+  apt:
+    update_cache: yes
+ 
+- name: "Installing apt dependencies"
+  apt:
+          name: "{{ item }}"
+  with_items:
+          - python-pip
+          - python-dev 
+          - libmysqlclient-dev
+          - mysql-client
+
+- name: "Installing pip dependencies"
+  pip:
+          name: MySQL-python
+          extra_args: --index=https://pypi.python.org/pypi/
+
+- name: "Installing  mysql server"
+  apt:
+          name: mysql-server
+          state: latest
+
+- name: Configure mysql to listen to external interface
+  lineinfile:
+          dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+          regexp: '^bind-address'
+          line: bind-address = 0.0.0.0
+
+- name: set default auth method to mysql_native_password
+  lineinfile:
+          dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+          insertafter: '[mysqld]'
+          line: 'default-authentication-plugin=mysql_native_password'
+
+- name: "Creating mysql user"
+  mysql_user:
+          name: {{ db_user }}
+          password : {{ db_password }}
+          priv: '*.*:ALL'
+          host: '%'
+          state: present
+  notify: restart mysql
+
+- name: Copy init.sql script
+  template:
+          src: init.sql
+          dest: {{ home_path }}
+          mode: 0775
+
+- name: execute sql script
+  mysql_db:
+          state: import
+          name: all
+          target: {{ home_path }}/init.sql

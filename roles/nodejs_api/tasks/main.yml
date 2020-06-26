@@ -1,0 +1,46 @@
+---
+# tasks file
+
+- name: add nodejs gpg key
+  apt_key:
+          url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+          state: present
+
+- name:  see Linux Standard Base to add node repo
+  command: lsb_release -c
+  register: lsb_release
+
+- name: see register result
+  debug:
+          msg: "the lsb for this instance is: {{ lsb_release.stdout }}"
+
+- name: add node source repo
+  apt_repository:
+          repo: "deb https://deb.nodesource.com/{{ node_version }}  {{ lsb_release.stdout }}"
+          state: present
+          update_cache: yes
+
+- name: install nodejs
+  apt:
+          name: nodejs
+          state: present
+  notify: install git_latest
+
+- name: clone api repo
+  git:
+          repo: https://github.com/MiguelIsaza95/movie-analyst-api.git
+          dest: "{{ home_path }}/movie-analyst-api"
+          update: yes
+          accept_hostkey: no
+
+- name: Install packages based on package.json
+  npm:
+          path: "{{ home_path }}/movie-analyst-api"
+          state: latest
+
+- name: Start app
+  shell: |
+          cd /home/ubuntu/movie-analyst-api
+          npm start &
+  args:
+          warn: no

@@ -1,0 +1,5 @@
+---
+# vars file
+#
+jenkins_domain: ci.movieanalyst.com
+ui_domain: front.movieanalyst.com

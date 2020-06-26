@@ -1,0 +1,25 @@
+---
+- name: "Provisioning proxy server with nginx"
+  hosts: tag_Name_nginx_proxy:&tag_Environment_Test
+  become: yes
+  become_user: root
+  become_method: sudo
+  roles:
+          - nginx
+
+- name : "Provisioning front applications"
+  hosts: tag_Name_movie_front:&tag_Environment_Test
+  become: yes
+  become_user: root
+  become_method: sudo
+  roles:
+          - nodejs_ui
+
+- name: "Provisioning back applications"
+  hosts: tag_Name_movie_back:&tag_Environment_Test
+  become: yes
+  become_user: root
+  become_method: sudo
+  roles:
+          - nodejs_api
+          - mysql_client

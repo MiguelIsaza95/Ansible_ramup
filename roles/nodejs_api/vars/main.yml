@@ -1,0 +1,7 @@
+---
+
+# vars file
+
+node_version: node_12.x
+lsb_release: ""
+home_path: /home/ubuntu

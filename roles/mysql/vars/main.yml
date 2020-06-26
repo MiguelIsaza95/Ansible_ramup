@@ -1,0 +1,6 @@
+---
+
+# vars file
+home_path: /home/ubuntu
+db_user: root
+db_pass: password

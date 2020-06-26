@@ -1,0 +1,10 @@
+---
+
+# handlers file
+
+- name: install git
+  apt:
+          name: git
+          state: present
+          enabled: yes
+  listen: install git_latest
