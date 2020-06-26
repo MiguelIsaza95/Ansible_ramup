@@ -1,0 +1,8 @@
+---
+# frontend playbook
+- name: "Provisioning fronted server"
+  hosts: tag_Name_movie_front:&tag_Environment_Test
+  become: yes
+  become_method: sudo
+  roles:
+          - nodejs_ui

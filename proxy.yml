@@ -1,0 +1,9 @@
+---
+# proxy playbook
+- name: "Provisioning nginx proxy"
+  hosts: tag_Name_nginx_proxy:&tag_Environment_Test
+  become: yes
+  become_ user: root
+  become_method: sudo
+  roles:
+          - nginx

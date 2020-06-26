@@ -1,0 +1,10 @@
+---
+# backend playbook
+- name: "Provisioning backend server"
+  hosts: tag_Name_movie_back:&tag_Environment_Test
+  become: yes
+  become_user: root
+  become_method: sudo
+  roles:
+          - nodejs_api
+          - mysql_client
