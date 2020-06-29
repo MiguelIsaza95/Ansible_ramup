@@ -10,7 +10,7 @@
           - kubernetes
 
 - name: "Provisioning backend server"
-  hosts: tag_Name_backend
+  hosts: tag_Name_backend:&tag_Environment_Test
   become: yes
   become_user: root
   become_method: sudo
@@ -19,7 +19,7 @@
           - mysql_client
 
 - name: "Provisioning fronted server"
-  hosts: tag_Name_fronted
+  hosts: tag_Name_fronted:&tag_Environment_Test
   become: yes
   become_user: root
   become_method: sudo

@@ -1,6 +1,6 @@
 ---
 - name: "Provisioning fronted server"
-  hosts: tag_Name_jenkins:&tag_Environment_Test
+  hosts: localhost
   become: yes
   become_method: sudo
   roles:
