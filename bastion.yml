@@ -1,8 +1,0 @@
----
-- name: "Provisioning mysql server"
-  hosts: localhost
-  become: yes
-  become_user: root
-  become_method: sudo
-  roles:
-          - mysql_client

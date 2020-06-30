@@ -55,4 +55,4 @@
   mysql_db:
           state: import
           name: all
-          target: {{ home_path }}/init.sql
+          target: "{{ home_path }}/init.sql"
