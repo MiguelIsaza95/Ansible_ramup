@@ -85,7 +85,7 @@
   wait_for:
           host: 127.0.0.1
           port: 8080
-          delay: 5
+          delay: 120
 
 - name: install plugins
   jenkins_plugin:
@@ -112,4 +112,4 @@
   wait_for:
           host: 127.0.0.1
           port: 8080
-          delay: 5
+          delay: 120

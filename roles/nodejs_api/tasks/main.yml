@@ -41,6 +41,6 @@
 - name: Start app
   shell: |
           cd /home/ubuntu/movie-analyst-api 
-          npm start &
+          npm start &&
   args:
           warn: no
