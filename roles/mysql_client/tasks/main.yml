@@ -10,6 +10,16 @@
           - python-dev 
           - libmysqlclient-dev
           - mysql-client
+          - python-pip
+          - build-essential
+
+- name: Install the MySQL-python through pip
+  pip:
+          name: "{{ item }}"
+  state: forcereinstall
+  with_items:
+          - pip
+          - MySQL-python
 
 - name: set default auth method to mysql_native_password
   lineinfile:
