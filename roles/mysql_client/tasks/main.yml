@@ -5,7 +5,8 @@
   apt:
           name: "{{ item }}"
   with_items:
-          - python-pip
+          - python-mysqldb
+          - mysql-server-core-8.0
           - python-dev 
           - libmysqlclient-dev
           - mysql-client
