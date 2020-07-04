@@ -3,23 +3,13 @@
 
 - name: "Installing apt dependencies"
   apt:
-          name: "{{ item }}"
-  with_items:
-          - python-mysqldb
-          - mysql-server-core-8.0
-          - python-dev 
-          - libmysqlclient-dev
-          - mysql-client
-          - python-pip
-          - build-essential
+          name: ["python3-pip","python3-dev", "libmysqlclient-dev"]
+          update_cache: yes
 
 - name: Install the MySQL-python through pip
   pip:
-          name: "{{ item }}"
-  state: forcereinstall
-  with_items:
-          - pip
-          - MySQL-python
+          name: "mysqlclient"
+          executable: pip3.8
 
 - name: set default auth method to mysql_native_password
   lineinfile:
