@@ -1,0 +1,8 @@
+---
+- name: "Provisioning mysql client for bastion"
+  hosts: localhost
+  become: yes
+  become_user: root
+  become_method: sudo
+  roles:
+          - mysql_client
