@@ -1,13 +1,8 @@
 ---
 # tasks file
-- name: install packages to allow apt to use repository over HTTPS
-  apt:
-          name:
-                  - apt-transport-https
-                  - ca-certificates
-                  - curl
-                  - gnupg-agent
-                  - software-properties-common
+
+- name: Add Docker Group
+  group: name=docker state=present
 
 - name: add docker engine official gpg key
   apt_key:
@@ -26,39 +21,33 @@
   apt_repository:
           repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ lsb_release.stdout }} stable
           state: present
+          update_cache: yes
 
-- name: install the latest docker engine community
-  apt:
-          name:
-                  - docker-ce
-                  - docker-ce-cli
-                  - containerd.io
-          state: latest
+- name: Install Docker
+  apt: name=docker-engine state=present
+        
+- name: Install docker-py
+  pip: name=docker-py version=1.9.0
 
-- name: install docker-compose
-  shell: |
-          curl -L "https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-  args:
-          warn: no
-
-- name: add docker-compose permission
+  - name: Ensure jenkins directory on docker host
   file:
-          path: /usr/local/bin/docker-compose
-          mode: u+x,g+x,o+x
+    state: directory
+    owner: 1000
+    group: 1000
+    path: /share/jenkins
 
-- name: check docker-composer version
-  command: docker-compose --version
-  register: compose_version
+- name: Pull the latest official jenkins docker image
+  docker_image:
+    name: "jenkins:latest"
 
-- name: checking the version of docker-compose
-  debug:
-          var: compose_version.stdout
-
-- name: add user to docker group
-  user:
-          name: "{{ item }}"
-          group: docker
-          append: true
-  with_items:
-          - jenkins
-          - ubuntu
+- name: Create a container from the jenkins docker image
+  docker_container:
+    name: "jenkins-server"
+    image: "jenkins"
+    ports:
+        - "8080:8080"
+        - "50000:50000"
+    volumes:
+        - "/share/jenkins:/var/jenkins_home"
+    state: present
+    recreate: no

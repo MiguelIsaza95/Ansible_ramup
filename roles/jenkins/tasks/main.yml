@@ -28,7 +28,7 @@
   apt_repository:
           repo: deb https://pkg.jenkins.io/debian-stable binary/
           state: present
-          update_cache: true
+          update_cache: false
 
 - name: install jenkins
   apt:
@@ -91,12 +91,11 @@
           port: 8080
           delay: 120
 
-  - name: Install terraform
+- name: Install terraform
   shell: |
-          sudo apt-get install -y unzip
-          wget https://releases.hashicorp.com/terraform/0.12.26/terraform_0.12.26_linux_386.zip
-          unzip terraform_0.12.26_linux_386.zip
-          sudo mv terraform /usr/local/bin/
+          wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
+          echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+          sudo apt update -y && sudo apt install terraform -y
           terraform --version
   args:
           warn: no
