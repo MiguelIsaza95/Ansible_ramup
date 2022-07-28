@@ -30,11 +30,11 @@
   pip: name=docker-py version=1.9.0
 
   - name: Ensure jenkins directory on docker host
-  file:
-    state: directory
-    owner: 1000
-    group: 1000
-    path: /share/jenkins
+    file:
+      state: directory
+      owner: 1000
+      group: 1000
+      path: /share/jenkins
 
 - name: Pull the latest official jenkins docker image
   docker_image:
