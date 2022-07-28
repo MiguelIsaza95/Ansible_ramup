@@ -1,13 +1,15 @@
 ---
 # tasks file
 
-- name: Add Docker Group
-  group: name=docker state=present
-
-- name: add docker engine official gpg key
-  apt_key:
-          url: https://download.docker.com/linux/ubuntu/gpg
-          state: present
+- name: Install apt-transport-https
+ansible.builtin.apt:
+  name:
+    - apt-transport-https
+    - ca-certificates
+    - lsb-release
+    - gnupg
+  state: latest
+  update_cache: true
 
 - name: see Linux Standard Base to add docker repo
   command: lsb_release -cs
@@ -17,17 +19,25 @@
   debug:
           msg: "the lsb for this instance is: {{ lsb_release.stdout }}"
 
-- name: setting up a stable repository
-  apt_repository:
-          repo: deb [arch=amd64] https://download.docker.com/linux/debian {{ lsb_release.stdout }} stable
-          state: present
-          update_cache: yes
+- name: Add signing key
+  ansible.builtin.apt_key:
+    url: "https://download.docker.com/linux/debian/gpg"
+    state: present
+
+- name: Add repository into sources list
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/debian {{ lsb_release.stdout }} stable"
+    state: present
+    filename: docker
 
 - name: Install Docker
-  apt: name=docker-engine state=present
-        
-- name: Install docker-py
-  pip: name=docker-py version=1.9.0
+  ansible.builtin.apt:
+      name:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+      state: latest
+      update_cache: true
 
 - name: Ensure jenkins directory on docker host
   file:
