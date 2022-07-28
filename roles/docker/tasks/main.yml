@@ -2,7 +2,7 @@
 # tasks file
 
 - name: Install Docker
-  ansible.builtin.shell: cd ~ && curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh
+  ansible.builtin.shell: curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh
 
 - name: Ensure jenkins directory on docker host
   file:
