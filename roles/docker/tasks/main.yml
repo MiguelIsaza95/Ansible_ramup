@@ -4,14 +4,14 @@
 - name: Install Docker
   ansible.builtin.shell: curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh
 
-    - name: Build Docker Jenkins Image
-    docker_image:
-      name: jenkins-docker
-      build:
-        path: .
-        pull: "yes"
-      source: build
-      state: present
+- name: Build Docker Jenkins Image
+  docker_image:
+    name: jenkins-docker
+    build:
+      path: .
+      pull: "yes"
+    source: build
+    state: present
 
 - name: Create Docker Jenkins Container
   docker_container:
