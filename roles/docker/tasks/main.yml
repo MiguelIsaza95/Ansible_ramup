@@ -15,7 +15,7 @@
 
 - name: Create Docker Jenkins Container
   docker_container:
-     name: "{{ container_name }}"
+     name: "jenkins"
      image: jenkins-docker
      ports:
       - "8080:8080"
