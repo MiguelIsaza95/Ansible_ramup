@@ -19,7 +19,7 @@
 
 - name: setting up a stable repository
   apt_repository:
-          repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ lsb_release.stdout }} stable
+          repo: deb [arch=amd64] https://download.docker.com/linux/debian {{ lsb_release.stdout }} stable
           state: present
           update_cache: yes
 
