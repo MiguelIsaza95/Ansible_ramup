@@ -13,7 +13,6 @@
                   - apt-transport-https
                   - gnupg
           state: present
-          update_cache: yes
 
 - name: install openjdk-8-jdk
   apt:
@@ -29,7 +28,6 @@
   apt_repository:
           repo: deb https://pkg.jenkins.io/debian-stable binary/
           state: present
-          update_cache: yes
 
 - name: install jenkins
   apt:

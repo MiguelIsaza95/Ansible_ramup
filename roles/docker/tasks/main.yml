@@ -8,7 +8,6 @@
                   - curl
                   - gnupg-agent
                   - software-properties-common
-          update_cache: yes
 
 - name: add docker engine official gpg key
   apt_key:
@@ -27,7 +26,6 @@
   apt_repository:
           repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ lsb_release.stdout }} stable
           state: present
-          update_cache: yes
 
 - name: install the latest docker engine community
   apt:

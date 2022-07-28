@@ -1,8 +1,5 @@
 ---
 # tasks file
-- name: update packages
-  apt:
-          update_cache: yes
 
 - name: kubectl latest version
   shell: |
